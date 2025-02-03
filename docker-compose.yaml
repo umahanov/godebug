@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"  # Expose the application port
+      - "40000:40000"  # Expose the debug port
+    environment:
+      - GO111MODULE=on
+    security_opt:
+      - "seccomp:unconfined"  # Disable seccomp for debugging
+    cap_add:
+      - SYS_PTRACE  # Grant SYS_PTRACE capability for Delve
+#    command: dlv exec ./main --listen=:40000 --headless=true --api-version=2 --accept-multiclient --continue
